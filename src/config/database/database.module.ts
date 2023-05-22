@@ -1,7 +1,7 @@
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import path from 'path';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -10,8 +10,8 @@ import path from 'path';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgresql',
-        entities: [`${path.basename('../dist/src/modules/**/*.entity.js')}`],
-        entitiesTs: [`${path.basename('./src/modules/**/*.entity.ts')}`],
+        entities: [join(__dirname, '../../../src/modules/**/*.entity.js')],
+        entitiesTs: [join(__dirname, '../../../../src/modules/**/*.entity.ts')],
         dbName: configService.get<string>('DB_NAME'),
         host: configService.get<string>('DB_HOST'),
         user: configService.get<string>('DB_USER'),
@@ -21,6 +21,7 @@ import path from 'path';
           tableName: 'mikroorm_migrations',
           path: './migrations',
         },
+        debug: true,
       }),
     }),
   ],

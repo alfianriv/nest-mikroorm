@@ -2,6 +2,6 @@ import { FilterDef } from '@mikro-orm/core/typings';
 
 export const NotSoftDelete: FilterDef = {
   name: 'NotSoftDelete',
-  cond: (args) => ({ deletedAt: { $ne: null } }),
+  cond: () => ({ deletedAt: null }),
   default: true,
 };
